@@ -1,6 +1,6 @@
 <div class=" col-md-4 col-md-offset-4">
 	<div class="panel panel-default">
-		<div class="panel-heading">Login</div>
+		<div class="panel-heading" align="center">Sign In</div>
 		<div class="panel-body">
 			<div class="col-md-12">
 				<form ng-submit="login()">
@@ -14,11 +14,12 @@
 																  placeholder="Password"
 							class="form-control" id="pwd" ng-model="password">
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-					<button class="btn btn-default" ui-sref="register">Register</button>
+					<button type="submit" class="btn btn-default">Login</button>
 
 					<div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
 				</form>
+
+					<label>Don't have an acoount? </label><a ui-sref="register"> SignUp</a>
 			</div>
 		</div>
 	</div>
