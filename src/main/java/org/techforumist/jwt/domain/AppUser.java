@@ -26,7 +26,9 @@ public class AppUser implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String name;
+
+	@Column(unique = true)
+	private String email;
 
 	@Column(unique = true)
 	private String username;
@@ -43,12 +45,12 @@ public class AppUser implements UserDetails {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<String> getRoles() {

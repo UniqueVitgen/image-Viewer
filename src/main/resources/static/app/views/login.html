@@ -5,11 +5,13 @@
 			<div class="col-md-12">
 				<form ng-submit="login()">
 					<div class="form-group">
-						<label for="username">Username:</label> <input type="txt"
-							class="form-control" ng-model="username" id="username">
+						<input type="email"
+																 placeholder="Email address"
+							class="form-control" ng-model="email" id="email">
 					</div>
 					<div class="form-group">
-						<label for="pwd">Password:</label> <input type="password"
+						<input type="password"
+																  placeholder="Password"
 							class="form-control" id="pwd" ng-model="password">
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>

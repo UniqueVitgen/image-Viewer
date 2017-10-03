@@ -9,4 +9,5 @@ import org.techforumist.jwt.domain.AppUser;
  */
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 	public AppUser findOneByUsername(String username);
+	public AppUser findOneByEmail(String email);
 }

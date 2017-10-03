@@ -69,20 +69,20 @@ public class HomeRestController {
 	}
 
 	/**
-	 * @param username
+	 * @param email
 	 * @param password
 	 * @param response
 	 * @return JSON contains token and user after success authentication.
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> login(@RequestParam String username, @RequestParam String password,
+	public ResponseEntity<Map<String, Object>> login(@RequestParam String email, @RequestParam String password,
 			HttpServletResponse response) throws IOException {
 		String token = null;
-		AppUser appUser = appUserRepository.findOneByUsername(username);
+		AppUser appUser = appUserRepository.findOneByEmail(email);
 		Map<String, Object> tokenMap = new HashMap<String, Object>();
 		if (appUser != null && appUser.getPassword().equals(password)) {
-			token = Jwts.builder().setSubject(username).claim("roles", appUser.getRoles()).setIssuedAt(new Date())
+			token = Jwts.builder().setSubject(appUser.getUsername()).claim("roles", appUser.getRoles()).setIssuedAt(new Date())
 					.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
 			tokenMap.put("token", token);
 			tokenMap.put("user", appUser);
