@@ -11,7 +11,8 @@
 							   placeholder="Username" pattern="[a-zA-Z]+" ng-pattern-restrict
 																	   required class="form-control" ng-model="appUser.username"
 																	   id="username" name="username">
-						<p ng-show="(register.username.$invalid && !register.username.$pristine)" class="help-block">required, only a-z or A-Z characters</p>
+						<p ng-show="register.username.$error.required && !register.username.$pristine" class="help-block">Required</p>
+						<p ng-show="(register.username.$invalid && !register.username.$pristine)" class="help-block">Only a-z or A-Z characters</p>
 
 					</div>
 
@@ -21,8 +22,8 @@
 							   placeholder="Email Address"
 							class="form-control" ng-model="appUser.email" id="email"
 							name="email">
-						<p ng-show="(appUser.email=='' && !register.email.$pristine)" class="help-block">requiredt</p>
-						<p ng-show="(register.email.$invalid && !register.email.$pristine)" class="help-block">required, email format</p>
+						<p ng-show="register.email.$error.required && !register.email.$pristine" class="help-block">Required</p>
+						<p ng-show="(register.email.$invalid && !register.email.$pristine)" class="help-block">Email format</p>
 					</div>
 
 					<div class="form-group"
@@ -32,7 +33,8 @@
 							   placeholder="Password"
 							class="form-control" id="pwd" ng-model="appUser.password"
 							name="password">
-						<p ng-show="(register.password.$invalid && !register.password.$pristine)" class="help-block">required, at least 6 characters long,
+						<p ng-show="register.password.$error.required && !register.password.$pristine" class="help-block">Required</p>
+						<p ng-show="(register.password.$invalid && !register.password.$pristine)" class="help-block">At least 6 characters long,
 							at least one lowercase letter, one uppercase
 							letter, one digit, no special symbols eg.
 							~!@#$%^&*()_+</p>
@@ -45,7 +47,8 @@
 																		   placeholder="Retype Password"
 							name="confirmPassword" required class="form-control" id="cpwd"
 							ng-model="confirmPassword">
-						<p ng-show="(register.confirmPassword.$invalid && !register.confirmPassword.$pristine)" class="help-block">required, at least 6 characters long,
+						<p ng-show="register.confirmPassword.$error.required && !register.confirmPassword.$pristine" class="help-block">Required</p>
+						<p ng-show="(register.confirmPassword.$invalid && !register.confirmPassword.$pristine)" class="help-block">At least 6 characters long,
 							at least one lowercase letter, one uppercase
 							letter, one digit, no special symbols eg.
 							~!@#$%^&*()_+</p>
@@ -55,7 +58,7 @@
 						ng-show="confirmPassword != appUser.password ">Password Not
 						Matching</div>
 
-					<button type="submit" class="btn btn-default"
+					<button type="submit" class="btn btn-default btn-success"
 						ng-disabled="register.$invalid || (confirmPassword != appUser.password)">SIGN ME UP</button>
 					<button class="btn btn-default" ui-sref="login">Login</button>
 					<div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
