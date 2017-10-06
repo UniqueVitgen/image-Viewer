@@ -1,0 +1,23 @@
+{
+  "name": "jwt-spring-boot-security-angularjs-master",
+  "homepage": "https://github.com/UniqueVitgen/intetics-Test-task",
+  "authors": [
+    "uniqueVitgen <vitgen1997@mail.ru>"
+  ],
+  "description": "myInit",
+  "main": "E:\\Image\\jwt-spring-boot-security-angularjs-master\\src\\main\\resources\\static\\index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dropify": "^0.2.2",
+    "lf-ng-md-file-input": "^1.5.3",
+    "ng-dropzone": "ngdropzone#^2.0.2"
+  }
+}

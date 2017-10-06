@@ -6,11 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JWT Demo</title>
 
+	<!-- Angular Material Dependencies -->
+	<link rel="stylesheet" href="app/css/angular-material.min.css">
+
 <!-- importing the bootstrap styles -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet"
 		  href="app/css/common.css">
+	<link rel="stylesheet"
+										  href="app/css/dropify.min.css">
+	<link rel="stylesheet"
+											 href="app/css/drop_zone.css">
+	<link rel="stylesheet"
+		  href="app/css/dropify.css">
+
+	<link rel="stylesheet" href="app/css/lf-ng-md-file-input.css">
 </head>
 
 <style>
@@ -41,6 +52,14 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
 
+
+	<script src="app/js/angular-animate.min.js"></script>
+	<script src="app/js/angular-aria.min.js"></script>
+	<script src="app/js/angular-material.min.js"></script>
+
+	<!-- Angular Material Fileinput -->
+	<script src="app/js/lf-ng-md-file-input.js"></script>
+
 	<!-- Including jquery and twitter bootstrap -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -62,6 +81,99 @@
 	<script type="text/javascript" src="app/controllers/page-not-found.js"></script>
 	<script type="text/javascript" src="app/controllers/access-denied.js"></script>
 	<script type="text/javascript" src="app/controllers/register.js"></script>
+
+	<script type="text/javascript" src="app/js/dropify.min.js"></script>
+	<script>
+        $(document).ready(function () {
+            // Basic
+            $('.dropify').dropify();
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez',
+                    replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                    remove: 'Supprimer',
+                    error: 'Désolé, le fichier trop volumineux'
+                }
+            });
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+            drEvent.on('dropify.beforeClear', function (event, element) {
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+            drEvent.on('dropify.afterClear', function (event, element) {
+                alert('File deleted');
+            });
+            drEvent.on('dropify.errors', function (event, element) {
+                console.log('Has Errors');
+            });
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function (e) {
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                } else {
+                    drDestroy.init();
+                }
+            })
+        });
+	</script>
+
+	<script>
+        $('.dropify').dropify();
+	</script>
+
+	<script>
+        $(document).ready(function()
+        {
+            $("#drop-area").on('dragenter', function (e){
+                e.preventDefault();
+                $(this).css('background', '#BBD5B8');
+            });
+
+            $("#drop-area").on('dragover', function (e){
+                e.preventDefault();
+            });
+
+            $("#drop-area").on('drop', function (e){
+                $(this).css('background', '#D8F9D3');
+                e.preventDefault();
+                var image = e.originalEvent.dataTransfer.files;
+                createFormData(image);
+            });
+        });
+
+        function createFormData(image)
+        {
+            var formImage = new FormData();
+            formImage.append('userImage', image[0]);
+            uploadFormData(formImage);
+        }
+
+        function uploadFormData(formData)
+        {
+            $.ajax({
+                url: "upload_image.php",
+                type: "POST",
+                data: formData,
+                contentType:false,
+                cache: false,
+                processData: false,
+                success: function(data){
+                    $('#drop-area').html(data);
+                }});
+        }
+	</script>
+	<!--<script src = "app/fonts/dropify.svg"></script>-->
+	<!--<script src = "app/fonts/dropify.eot"></script>-->
+	<!--<script src = "app/fonts/dropify.ttf"></script>-->
+	<!--<script src = "app/fonts/dropify.woff"></script>-->
 	<!--<script type="text/javascript" src="app/module/angular-messages/angular-messages.js"></script>-->
+
+
+
+
+	```
 </body>
 </html>

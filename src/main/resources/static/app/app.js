@@ -1,5 +1,42 @@
 // Creating angular JWTDemoApp with module name "JWTDemoApp"
-angular.module('JWTDemoApp', [ 'ui.router'])
+angular.module('ui.imagedrop', [])
+    .directive("imagedrop", function ($parse, $document) {
+        return {
+            restrict: "A",
+            link: function (scope, element, attrs) {
+                var onImageDrop = $parse(attrs.onImageDrop);
+
+                //When an item is dragged over the document
+                var onDragOver = function (e) {
+                    e.preventDefault();
+                    angular.element('body').addClass("dragOver");
+                };
+
+                //When the user leaves the window, cancels the drag or drops the item
+                var onDragEnd = function (e) {
+                    e.preventDefault();
+                    angular.element('body').removeClass("dragOver");
+                };
+
+                //When a file is dropped
+                var loadFile = function (file) {
+                    scope.uploadedFile = file;
+                    scope.$apply(onImageDrop(scope));
+                };
+
+                //Dragging begins on the document
+                $document.bind("dragover", onDragOver);
+
+                //Dragging ends on the overlay, which takes the whole window
+                element.bind("dragleave", onDragEnd)
+                    .bind("drop", function (e) {
+                        onDragEnd(e);
+                        loadFile(e.originalEvent.dataTransfer.files[0]);
+                    });
+            }
+        };
+    });
+angular.module('JWTDemoApp', [ 'ui.router','ui.imagedrop','ngMaterial','lfNgMdFileInput'])
 
 
 // the following method will run at the time of initializing the module. That

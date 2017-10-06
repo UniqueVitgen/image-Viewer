@@ -7,3 +7,49 @@ button{
 panel{
     border: 2px solid grey;
 }
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+    display: none;
+}
+
+body.dragOver #file-drop{display:block;} /* During drag */
+body #file-drop{z-index:1000;position:fixed;top:0;left:0;width:100%;height:100%;display:none;} /* No drag */
+
+body
+{
+    width:100%;
+    margin:0 auto;
+    padding:0px;
+    font-family:helvetica;
+    /*background-color:#084B8A;*/
+}
+#wrapper
+{
+    text-align:center;
+    margin:0 auto;
+    padding:0px;
+    width:995px;
+}
+#drop-area
+{
+    margin-top:20px;
+    margin-left:220px;
+    width:550px;
+    height:200px;
+    background-color:white;
+    border:3px dashed grey;
+}
+.drop-text
+{
+    margin-top:70px;
+    color:grey;
+    font-size:25px;
+    font-weight:bold;
+}
+#drop-area img
+{
+    max-width:200px;
+}
