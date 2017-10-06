@@ -1,31 +1,25 @@
 package org.techforumist.jwt.web;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.mysql.jdbc.Blob;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.techforumist.jwt.domain.AppUser;
 import org.techforumist.jwt.domain.Picture;
 import org.techforumist.jwt.repository.AppUserRepository;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URL;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * All web services in this controller will be available for all the users
@@ -97,8 +91,39 @@ public class HomeRestController {
 
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
 	public ResponseEntity<Picture> publish(@RequestParam String name, @RequestParam String description,
-										   @RequestParam String[] source, @RequestParam String[] tags,
-													 HttpServletResponse response) throws IOException {
-		return null;
+										   @RequestParam File source, @RequestParam String[] tags,
+										   HttpServletResponse response) throws IOException {
+
+		try{
+			File f1 = source;
+			File f2 = new File("E:\\Image");
+			InputStream in = new FileInputStream(f1);
+
+			//For Append the file.
+			//OutputStream out = new FileOutputStream(f2,true);
+
+			//For Overwrite the file.
+			OutputStream out = new FileOutputStream(f2);
+
+			byte[] buf = new byte[1024];
+			int len;
+			while ((len = in.read(buf)) > 0){
+				out.write(buf, 0, len);
+			}
+			in.close();
+			out.close();
+			System.out.println("File copied.");
+		}
+		catch(FileNotFoundException ex){
+			System.out.println(ex.getMessage() + " in the specified directory.");
+			System.exit(0);
+		}
+		catch(IOException e){
+			System.out.println(e.getMessage());
+		}
+//		Picture picture = new Picture();
+//		picture.setName(name);
+//		picture.setDescriptuion(description);
+	    return null;
 	}
 }

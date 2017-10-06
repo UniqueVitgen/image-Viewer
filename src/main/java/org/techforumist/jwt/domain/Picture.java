@@ -1,6 +1,7 @@
 package org.techforumist.jwt.domain;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,8 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String source;
+    @Lob
+    private byte[] source;
 
     private String name;
 
@@ -30,11 +32,11 @@ public class Picture {
         this.id = id;
     }
 
-    public String getSource() {
+    public byte[] getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(byte[] source) {
         this.source = source;
     }
 
