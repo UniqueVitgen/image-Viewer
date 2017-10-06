@@ -1,5 +1,5 @@
 // Creating angular JWTDemoApp with module name "JWTDemoApp"
-angular.module('ui.imagedrop', [])
+var app= angular.module('ui.imagedrop', [])
     .directive("imagedrop", function ($parse, $document) {
         return {
             restrict: "A",
@@ -37,7 +37,41 @@ angular.module('ui.imagedrop', [])
         };
     });
 angular.module('JWTDemoApp', [ 'ui.router','ui.imagedrop','ngMaterial','lfNgMdFileInput'])
+    .directive('tagManager', function() {
+        return {
+            restrict: 'E',
+            scope: { tags: '=' },
+            template:
+            '<div class="tags">' +
+            '<div ng-repeat="(idx, tag) in tags" class="tag label label-success">{{tag}} <a class="close" href ng-click="remove(idx)">×</a></div>' +
+            '</div>' +
+            '<div class="input-group"><input type="text" class="form-control" placeholder="Write a tag..." ng-model="new_value"></input> ' +
+            '<span class="input-group-btn"><a class="btn btn-default" ng-click="add()">Add tag</a></span></div>',
+            link: function ( $scope, $element ) {
 
+                var input = angular.element( $element.children()[1] );
+
+                // adds the new tag to the tags array
+                $scope.add = function() {
+                    $scope.tags.push( $scope.new_value );
+                    $scope.new_value = "";
+                };
+
+                // remove an item
+                $scope.remove = function ( idx ) {
+                    $scope.tags.splice( idx, 1 );
+                };
+
+                // capture keypresses
+                input.bind( 'keypress', function ( event ) {
+                    // enter was pressed
+                    if ( event.keyCode == 13 ) {
+                        $scope.$apply( $scope.add );
+                    }
+                });
+            }
+        };
+    })
 
 // the following method will run at the time of initializing the module. That
 // means it will run only one time.

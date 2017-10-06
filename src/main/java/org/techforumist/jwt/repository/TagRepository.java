@@ -1,4 +1,7 @@
 package org.techforumist.jwt.repository;
 
-public class TagRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.techforumist.jwt.domain.Tag;
+
+public interface TagRepository extends JpaRepository<Tag,Long> {
 }

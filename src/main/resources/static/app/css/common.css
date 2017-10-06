@@ -53,3 +53,19 @@ body
 {
     max-width:200px;
 }
+
+.tags {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.tags .tag {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 13px;
+}
+
+.tag .close {
+    font-size: 14px;
+    margin-left: 5px;
+}

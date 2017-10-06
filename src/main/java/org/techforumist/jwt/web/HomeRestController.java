@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.techforumist.jwt.domain.AppUser;
+import org.techforumist.jwt.domain.Picture;
 import org.techforumist.jwt.repository.AppUserRepository;
 
 import io.jsonwebtoken.Jwts;
@@ -92,5 +93,12 @@ public class HomeRestController {
 			return new ResponseEntity<Map<String, Object>>(tokenMap, HttpStatus.UNAUTHORIZED);
 		}
 
+	}
+
+	@RequestMapping(value = "/publish", method = RequestMethod.POST)
+	public ResponseEntity<Picture> publish(@RequestParam String name, @RequestParam String description,
+										   @RequestParam String[] source, @RequestParam String[] tags,
+													 HttpServletResponse response) throws IOException {
+		return null;
 	}
 }

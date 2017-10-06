@@ -20,7 +20,36 @@
                 <h4 class="modal-title">Modal Header</h4>
             </div>
             <div class="modal-body">
-                <lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input>
+                <table>
+                    <tr>
+                        <td>add image</td>
+                        <td>add info</td>
+                    </tr>
+                    <tr>
+                        <td><lf-ng-md-file-input ng-model-options="source" lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input></td>
+                        <td><form ng-submit="publish()">
+                            <div class="form-group">
+                                <label for="name">Name your media</label>
+                                <input type="text"
+                                       class="form-control" ng-model="name" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="tags">Add tags</label>
+                                <br>
+                                <tag-manager id="tags" ng-init="tags=[]" tags="tags"></tag-manager>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Add description</label>
+                                <textarea type="text"
+                                          class="form-control" ng-model="description" id="description"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Publish</button>
+
+                            <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
+                        </form></td>
+                    </tr>
+                </table>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -29,7 +58,6 @@
 
     </div>
 </div>
-<input type="file" name="files" id="input-file-now" class="dropify">
 
 
 
