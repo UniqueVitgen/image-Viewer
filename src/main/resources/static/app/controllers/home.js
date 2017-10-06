@@ -7,7 +7,7 @@ app
     $scope.publish = function() {
         // requesting the token by usename and passoword
         $http({
-            url : 'authenticate',
+            url : 'publish',
             method : "POST",
             params : {
                 name : $scope.name,
