@@ -64,6 +64,9 @@ app
         var fd = new FormData();
         //Take the first selected file
         fd.append("file", this.files05[0].lfFile);
+        fd.append("name", this.name);
+        fd.append("description", this.description);
+        fd.append("tags", this.tags);
 
         $http.post("upload", fd, {
             withCredentials: true,

@@ -1,6 +1,7 @@
 package org.techforumist.jwt.web;
 
 import com.mysql.jdbc.Blob;
+import com.sun.javafx.scene.input.PickResultChooser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.hibernate.Hibernate;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.techforumist.jwt.domain.AppUser;
 import org.techforumist.jwt.domain.Picture;
+import org.techforumist.jwt.domain.Tag;
 import org.techforumist.jwt.repository.AppUserRepository;
 import org.techforumist.jwt.repository.PictureRepository;
 import org.techforumist.jwt.repository.TagRepository;
@@ -109,19 +111,38 @@ public class HomeRestController {
 //	}
 
 	@PostMapping("/upload") // //new annotation since 4.3
-	public String singleFileUpload(@RequestParam("file") MultipartFile file
+	public ResponseEntity<Picture> singleFileUpload(@RequestParam("file") MultipartFile file,
+								   @RequestParam("name") String name,
+								   @RequestParam("description") String description,
+								   @RequestParam("tags") String[] tags
 								   ) {
 
+		Picture picture = null;
 		try {
 
 			// Get the file and save it somewhere
 			byte[] bytes = file.getBytes();
+			picture = new Picture();
+			picture.setSource(file.getBytes());
+			picture.setName(name);
+			picture.setDescription(description);
+			Tag tag;
+			for(String tagName : tags){
+				if((tag = tagRepository.findByName(tagName)) == null){
+					tag = new Tag();
+					tag.setName(tagName);
+					tagRepository.save(tag);
+				}
+				picture.getTags().add(tag);
+			}
+			return new ResponseEntity<Picture>(pictureRepository.save(picture), HttpStatus.CREATED);
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return "uploadStatus";
+		return new ResponseEntity<Picture>(picture, HttpStatus.BAD_REQUEST);
 	}
 
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)

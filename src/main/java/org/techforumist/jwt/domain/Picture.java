@@ -2,6 +2,7 @@ package org.techforumist.jwt.domain;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Picture {
     @ManyToMany
     @JoinTable(name = "pricture_tags", joinColumns = @JoinColumn(name = "picture_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private List<Tag> tags = new ArrayList<Tag>();
 
     private String description;
 
