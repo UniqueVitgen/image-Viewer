@@ -103,13 +103,6 @@ public class HomeRestController {
 
 	}
 
-//	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-//	public @ResponseBody String saveUserDataAndFile(@RequestParam("file") MultipartFile file,
-//													MultipartHttpServletRequest request) {
-//		// Im Still wotking on it
-//		return "";
-//	}
-
 	@PostMapping("/upload") // //new annotation since 4.3
 	public ResponseEntity<Picture> singleFileUpload(@RequestParam("file") MultipartFile file,
 								   @RequestParam("name") String name,
@@ -145,6 +138,26 @@ public class HomeRestController {
 		return new ResponseEntity<Picture>(picture, HttpStatus.BAD_REQUEST);
 	}
 
+	public List<Tag> getRandomElements(final int amount, final List<Tag> list) {
+		ArrayList<Tag> returnList = new ArrayList<Tag>(list);
+
+		Collections.shuffle(returnList); // тут делаем рандом
+		if (returnList.size() > amount) { // отрезаем не нужную часть
+			// тут отрезаем не нужную часть
+			list.subList(returnList.size() - amount, returnList.size()).clear();
+
+			return returnList;
+		}
+		return returnList;
+	}
+
+	@RequestMapping(value = "/popular", method = RequestMethod.GET)
+	public List<Tag> getPopularTags(){
+		List<Tag> tags = tagRepository.findAll();
+		List<Tag> t = getRandomElements(5,tags);
+		return t;
+	}
+
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
 	public ResponseEntity<Picture> publish(@RequestParam String name, @RequestParam String description,
 										   @RequestParam byte[] source, @RequestParam String[] tags,
@@ -158,5 +171,10 @@ public class HomeRestController {
 //		picture.setName(name);
 //		picture.setDescription(description);
 	    return new ResponseEntity<Picture>(pictureRepository.save(picture), HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value="/pictures",method = RequestMethod.GET)
+	public List<Picture> pictures(){
+		return pictureRepository.findAll();
 	}
 }

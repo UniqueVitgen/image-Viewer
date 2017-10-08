@@ -2,9 +2,17 @@
 // Creating the Angular Controller
 app
 .controller('HomeController', ['$http', '$scope', 'AuthService', 'FileUploader','Upload',
-    function($http, $scope, AuthService, FileUploader,Upload) {
+    function($http, $scope, AuthService, FileUploader,Upload,$state,$rootScope) {
 	$scope.user = AuthService.user;
 	$scope.tags=[];
+	$scope.pictures = [];
+	$scope.popularTagNames = [];
+	$http.get('popular').success(function (res) {
+        $scope.popularTags = res;
+
+    }).error(function(err){
+
+    });
     var urlToBolb=function downloadArt(url)
     {
         $.ajax(url, {
@@ -18,6 +26,26 @@ app
             // saveAs(blob, filename);
         });
     };
+    function base64toBlob(base64Data, contentType) {
+            contentType = contentType || '';
+            var sliceSize = 1024;
+            var byteCharacters = atob(base64Data);
+            var bytesLength = byteCharacters.length;
+            var slicesCount = Math.ceil(bytesLength / sliceSize);
+            var byteArrays = new Array(slicesCount);
+
+            for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                var begin = sliceIndex * sliceSize;
+                var end = Math.min(begin + sliceSize, bytesLength);
+
+                var bytes = new Array(end - begin);
+                for (var offset = begin, i = 0 ; offset < end; ++i, ++offset) {
+                    bytes[i] = byteCharacters[offset].charCodeAt(0);
+                }
+                byteArrays[sliceIndex] = new Uint8Array(bytes);
+            }
+            return new Blob(byteArrays, { type: contentType });
+        }
     function downloadURI(uri, name) {
         var link = document.createElement("a");
         link.download = name;
@@ -42,24 +70,20 @@ app
         // write the ArrayBuffer to a blob, and you're done
         return new Blob([ab], {type: mimeString});
     }
+        $http.get('pictures').success(function (res) {
+            var pictures = res;
+            $scope.sources = [];
+            for(var i = 0; i < pictures.length;i++){
+                var b = base64toBlob(res[i].source,"image/jpeg");
+                $scope.sources.push(URL.createObjectURL(b));
+            }
 
+        }).error(function (error) {
+            $scope.message = error.message;
+        });
 
     // downloadURI("data:text/html,HelloWorld!", "helloWorld.txt");
-    var myBlob;
     $scope.publish = function() {
-        // requesting the token by usename and passoword
-
-        $scope.tags = this.tags;
-        $scope.source = this.files05[0].lfDataUrl;
-
-        // downloadURI($scope.source, "helloWorld.jpg");
-        console.log(this.files05[0].lfFile instanceof File);
-        console.log(this.files05[0].lfFile instanceof Blob);
-        console.log(typeof this.files05[0].lfFile);
-        $scope.source = new Blob([this.files05[0].lfFile],{ type: "image/jpeg" });
-        $scope.source.type = "image/jpeg";
-        console.log($scope.source instanceof Blob);
-        console.log($scope.source);
 
         var fd = new FormData();
         //Take the first selected file
@@ -72,69 +96,9 @@ app
             withCredentials: true,
             headers: {'Content-Type': undefined },
             transformRequest: angular.identity
-        }).success().error();
+        }).success(function(res) {
 
-//create the ajax request (traditional way)
-//         var request = new XMLHttpRequest();
-//         request.open('POST', 'upload');
-//         request.send(formData);
-        // Upload.upload({
-        //     url : 'upload',
-        //     data: {file: this.files05[0].lfFile, 'username': this.name}
-        // });
-        // var myBl;
-        // var f = function downloadArt(url)
-        // {
-        //     $.ajax(url, {
-        //         dataType: "binary",
-        //         processData: false
-        //     }).done(function (data) {
-        //         // just my logic to name/create files
-        //         // var filename = url.substr(url.lastIndexOf('/') + 1) + '.png';
-        //         var blob = new Blob([data], { type: 'image/png' });
-        //         myBl=blob;
-        //         // saveAs(blob, filename);
-        //     });
-        // };
-        // f($scope.source);
-        // $scope.blob = myBl;
-        // $scope.source = urlToBolb($scope.source);
-        $scope.name = this.name;
-        $scope.description = this.description;
-        // $upload.upload({
-        //     url : 'upload',
-        //     file : this.files05[0].lfFile,
-        //     method : 'POST',
-        //     data : 'data'
-        // });
-        // $http({
-        //     url : 'upload',
-        //     method : "POST",
-        //     params : {
-        //         file: this.files05[0].lfFile
-        //     },
-        //     enctype:"multipart/form-data"
-        // }).success(function(res) {
-        //     $scope.password = null;
-        //     // checking if the token is available in the response
-        //     if (res) {
-        //         $scope.message = '';
-        //         // setting the Authorization Bearer token with JWT token
-        //         $http.defaults.headers.common['Authorization'] = 'Bearer ' + res.token;
-        //
-        //         // setting the user in AuthService
-        //         AuthService.user = res.user;
-        //         $rootScope.$broadcast('LoginSuccessful');
-        //         // going to the home page
-        //         $state.go('home');
-        //     } else {
-        //         // if the token is not present in the response then the
-        //         // authentication was not successful. Setting the error message.
-        //         $scope.message = 'Authetication Failed !';
-        //     }
-        // }).error(function(error) {
-        //     // if authentication was not successful. Setting the error message.
-        //     $scope.message = 'Authetication Failed !';
-        // });
+        })
+            .error();
     };
 }]);

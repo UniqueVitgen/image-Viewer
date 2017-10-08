@@ -1,14 +1,42 @@
 <!--<pre>{{user|json}}</pre>-->
+
     <div class="input-group" width="100%">
         <input type="text" class="form-control" placeholder="Search by keyword">
         <span class="input-group-btn">
         <button class="btn btn-default" type="button">Search</button>
       </span>
-    </div><!-- /input-group -->
-
+    </div>
+<div id = "popularTags">
+    <h style="font-size: 30px">e.g.  </h><a href="javascript:void(0)" ng-repeat="tag in popularTags" style="padding-right: 20px">{{tag.name}}</a>
+</div>
+<br>
+<br>
+<!-- /input-group -->
 <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
+<!--<button type="button" class="btn btn-info btn-lg" >Open Modal</button>-->
+<div>
+<div class="col-xs-6 col-md-3">
+    <a href="javascript:void(0)" class="thumbnail" data-toggle="modal" data-target="#myModal">
+        <img id="addImg" ng-src="http://cs6.pikabu.ru/post_img/2014/03/04/11/1393956849_944376031.jpg" alt="...">
+        <h3 id = "addCap">Add New Image</h3>
+    </a>
+</div>
+<div class="col-xs-6 col-md-3" ng-repeat="source in sources">
+    <a href="javascript:void(0)" class="thumbnail">
+        <img ng-src="{{source}}" alt="...">
+    </a>
+</div>
+</div>
+    <!--<div class="item">-->
+        <!--<div class="item-responsive item-16by9">-->
+            <!--<div class="content" style="background: url(http://cs6.pikabu.ru/post_img/2014/03/04/11/1393956849_944376031.jpg);"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="item" ng-repeat="source in sources">-->
+        <!--<div class="item-responsive item-16by9">-->
+            <!--<div class="content" ng-style="background: url($$scope.source);"></div>-->
+        <!--</div>-->
+    <!--</div>-->
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -25,10 +53,10 @@
                         <td>add image</td>
                         <td>add info</td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td><form ng-submit="publish()" method="POST" enctype="multipart/form-data">
-                            <lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input>
+                    <tr><form ng-submit="publish()" method="POST" enctype="multipart/form-data">
+                        <td><lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input></td>
+                        <td>
+
                             <div class="form-group">
                                 <label for="name">Name your media</label>
                                 <input type="text"
@@ -47,7 +75,7 @@
                             <button type="submit" class="btn btn-success">Publish</button>
 
                             <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
-                        </form></td>
+                        </td></form>
                     </tr>
                 </table>
 

@@ -69,3 +69,34 @@ body
     font-size: 14px;
     margin-left: 5px;
 }
+
+
+.thumbnail {
+    background-color: #ffffff;
+    width: 250px;
+    height: 200px;
+    display: inline-block; /* makes it fit in like an <img> */
+    background-size: cover; /* or contain */
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.thumbnail > img {
+    width: 240px;
+    height: 180px;
+}
+
+img#addImg {
+    width: 240px;
+    height: 120px;
+}
+h3#addCap {
+    text-align: center;
+    width: 240px;
+    height: 40px;
+    color:black;
+}
+div#popularTags > a {
+    font-size:20px;
+    text-decoration: underline;
+    color:#4499DD;
+}
