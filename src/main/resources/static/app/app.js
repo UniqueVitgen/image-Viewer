@@ -36,7 +36,9 @@ var app= angular.module('ui.imagedrop', [])
             }
         };
     });
-angular.module('JWTDemoApp', [ 'ui.router','ui.imagedrop','ngMaterial','lfNgMdFileInput'])
+angular.module('JWTDemoApp', [ 'ui.router','ui.imagedrop','ngMaterial','lfNgMdFileInput',
+    'ngFileUpload',
+    'angularFileUpload'])
     .directive('tagManager', function() {
         return {
             restrict: 'E',

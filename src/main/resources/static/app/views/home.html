@@ -26,8 +26,9 @@
                         <td>add info</td>
                     </tr>
                     <tr>
-                        <td><lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input></td>
-                        <td><form ng-submit="publish()">
+                        <td></td>
+                        <td><form ng-submit="publish()" method="POST" enctype="multipart/form-data">
+                            <lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input>
                             <div class="form-group">
                                 <label for="name">Name your media</label>
                                 <input type="text"

@@ -22,7 +22,7 @@ public class Picture {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags;
 
-    private String descriptuion;
+    private String description;
 
     public Long getId() {
         return id;
@@ -56,11 +56,11 @@ public class Picture {
         this.tags = tags;
     }
 
-    public String getDescriptuion() {
-        return descriptuion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptuion(String descriptuion) {
-        this.descriptuion = descriptuion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
