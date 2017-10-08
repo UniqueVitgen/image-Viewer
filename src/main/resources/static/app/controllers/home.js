@@ -13,6 +13,12 @@ app
     }).error(function(err){
 
     });
+        $http.get('tags').success(function (res) {
+            $scope.allTags = res;
+
+        }).error(function(err){
+
+        });
     var urlToBolb=function downloadArt(url)
     {
         $.ajax(url, {
@@ -70,7 +76,7 @@ app
         // write the ArrayBuffer to a blob, and you're done
         return new Blob([ab], {type: mimeString});
     }
-        $http.get('pictures').success(function (res) {
+    $http.get('pictures').success(function (res) {
             var pictures = res;
             $scope.sources = [];
             for(var i = 0; i < pictures.length;i++){
@@ -101,4 +107,7 @@ app
         })
             .error();
     };
+    $scope.searching = function (name) {
+        $scope.allTags.filter
+    }
 }]);

@@ -154,8 +154,14 @@ public class HomeRestController {
 	@RequestMapping(value = "/popular", method = RequestMethod.GET)
 	public List<Tag> getPopularTags(){
 		List<Tag> tags = tagRepository.findAll();
-		List<Tag> t = getRandomElements(5,tags);
-		return t;
+		getRandomElements(tags.size()-7,tags);
+		return tags;
+	}
+
+	@RequestMapping(value = "/tags", method = RequestMethod.GET)
+	public List<Tag> getTags(){
+		List<Tag> tags = tagRepository.findAll();
+		return tags;
 	}
 
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
