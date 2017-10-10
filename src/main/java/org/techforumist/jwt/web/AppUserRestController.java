@@ -112,4 +112,8 @@ public class AppUserRestController {
 		return appUserRepository.save(appUser);
 	}
 
+	@RequestMapping(value = "/users/password")
+	public String getPassword(@RequestBody AppUser appUser) {
+		return appUserRepository.findOneByUsername(appUser.getUsername()).getPassword();
+	}
 }

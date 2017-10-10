@@ -9,6 +9,8 @@ angular.module('JWTDemoApp')
 	});
 	$scope.logout = function() {
 		AuthService.user = null;
+		AuthService.putUser(null);
+        AuthService.putToken(null);
 		$rootScope.$broadcast('LogoutSuccessful');
 		$state.go('login');
 	};

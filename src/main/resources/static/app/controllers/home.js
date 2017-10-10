@@ -9,7 +9,18 @@ app
             }
             return false;
         };
+        if(!AuthService.getUser()){
+
+            AuthService.user = null;
+            AuthService.putUser(null);
+            AuthService.putToken(null);
+            $rootScope.$broadcast('LogoutSuccessful');
+            $state.go('login');
+        }
 	$scope.user = AuthService.user;
+
+        AuthService.putUser($scope.user);
+        var  u =JSON.parse(localStorage.getItem("user"));
 	$scope.tags=[];
 	$scope.pictures = [];
 	$scope.popularTagNames = [];
