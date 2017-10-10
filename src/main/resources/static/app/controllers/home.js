@@ -3,6 +3,12 @@
 app
 .controller('HomeController', ['$http', '$scope', 'AuthService', 'FileUploader','Upload',
     function($http, $scope, AuthService, FileUploader,Upload,$state,$rootScope) {
+        Array.prototype.contains = function ( needle ) {
+            for (i in this) {
+                if (this[i] == needle) return true;
+            }
+            return false;
+        };
 	$scope.user = AuthService.user;
 	$scope.tags=[];
 	$scope.pictures = [];
@@ -77,9 +83,9 @@ app
         return new Blob([ab], {type: mimeString});
     }
     $http.get('pictures').success(function (res) {
-            var pictures = res;
+            $scope.pictures = res;
             $scope.sources = [];
-            for(var i = 0; i < pictures.length;i++){
+            for(var i = 0; i < $scope.pictures.length;i++){
                 var b = base64toBlob(res[i].source,"image/jpeg");
                 $scope.sources.push(URL.createObjectURL(b));
             }
@@ -108,6 +114,29 @@ app
             .error();
     };
     $scope.searching = function (name) {
-        $scope.allTags.filter
+        var findingTag = $scope.allTags.filter(function (tag) {
+            return tag.name.indexOf(name) !=-1;
+        });
+        $scope.findingPictures = $scope.pictures.filter(function (picture) {
+            var ans = false;
+            var tagNames = picture.tags.map(function (t) {
+                return t.name.toLowerCase();
+            });
+            findingTag.forEach(function (tag) {
+                if(tagNames.contains(tag.name.toLowerCase())){
+                    ans = true;
+                }
+            });
+            return ans;
+        });
+
+        $scope.sources = [];
+        for(var i = 0; i < $scope.findingPictures.length;i++){
+            var b = base64toBlob($scope.findingPictures[i].source,"image/jpeg");
+            $scope.sources.push(URL.createObjectURL(b));
+        }
+    }
+    $scope.searchValueChange = function(name){
+        $scope.searchText = name;
     }
 }]);

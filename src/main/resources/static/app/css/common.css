@@ -4,9 +4,6 @@ input {
 button{
     border: 2px solid grey;
 }
-panel{
-    border: 2px solid grey;
-}
 
 .box__dragndrop,
 .box__uploading,
@@ -131,4 +128,47 @@ div#popularTags > a {
 
 #custom-search-input .glyphicon-search{
     font-size: 23px;
+}
+
+.form-control, .panel, #fortags, .input-group-btn,
+.lf-ng-md-file-input-container,
+.lf-ng-md-file-input{
+    border: 1px solid grey;
+}
+
+.lf-ng-md-file-input-frame > img {
+    width: 370px;
+    height: 230px;
+    max-width:300%;
+}
+td{
+    width:300px;
+    padding:20px;
+    vertical-align: middle;
+}
+
+.layout-column{
+    width: 300px;
+    height:250px;
+}
+td >form {
+    vertical-align: middle;
+}
+
+.lf-ng-md-file-input {
+    height: 100%;
+    widtH: 400px;
+}
+
+.modal-dialog{
+    width:770px;
+}
+
+#login{
+    border: 1px solid grey;
+    width: 100%;
+}
+
+.btn-success{
+    float:right;
 }

@@ -1,6 +1,9 @@
 angular.module('JWTDemoApp')
 // Creating the Angular Controller
 .controller('LoginController', function($http, $scope, $state, AuthService, $rootScope) {
+	if(AuthService.user){
+		$state.go('home');
+    }
 	// method for login
 	$scope.login = function() {
 		// requesting the token by usename and passoword
@@ -21,6 +24,7 @@ angular.module('JWTDemoApp')
 
 				// setting the user in AuthService
 				AuthService.user = res.user;
+				$rootScope.user = AuthService.user;
 				$rootScope.$broadcast('LoginSuccessful');
 				// going to the home page
 				$state.go('home');

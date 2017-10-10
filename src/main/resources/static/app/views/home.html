@@ -1,15 +1,16 @@
 <!--<pre>{{user|json}}</pre>-->
 <section class="container">
-    <form class="search" method="post" action="index.html" width="100%">
+    <form class="search" width="100%">
         <input ng-model="searchText" type="search" name="q" placeholder="Search..." autocomplete="off">
         <ul class="search-ac">
-            <li ng-repeat="one in allTags | filter:searchText"><a href="index.html">{{one.name}}</a></li>
+            <li ng-repeat="one in allTags | filter:searchText | limitTo:10"><a href="javascript:void(0)"
+                                                                               ng-click="searchValueChange(one.name)">{{one.name}}</a></li>
         </ul>
-        <button type="submit" class="btn btn-default">Search</button>
+        <button type="submit" ng-click="searching(searchText)" class="btn btn-default">Search</button>
     </form>
 </section>
 <div id = "popularTags">
-    <h style="font-size: 30px">e.g.  </h><a href="javascript:void(0)" ng-repeat="tag in popularTags | limitTo:7" style="padding-right: 20px">{{tag.name}}</a>
+    <h style="font-size: 30px">e.g.  </h><a href="javascript:void(0)" ng-click="searching(tag.name)" ng-repeat="tag in popularTags | limitTo:7" style="padding-right: 20px">{{tag.name}}</a>
 </div>
 <br>
 <br>
@@ -48,7 +49,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Add Image Form</h4>
             </div>
             <div class="modal-body">
                 <table>
@@ -56,29 +57,29 @@
                         <td>add image</td>
                         <td>add info</td>
                     </tr>
-                    <tr><form ng-submit="publish()" method="POST" enctype="multipart/form-data">
+                    <tr>
                         <td><lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input></td>
-                        <td>
-
-                            <div class="form-group">
+                        <td><form ng-submit="publish()" method="POST" enctype="multipart/form-data"><div class="form-group">
                                 <label for="name">Name your media</label>
                                 <input type="text"
                                        class="form-control" ng-model="name" id="name">
                             </div>
                             <div class="form-group">
                                 <label for="tags">Add tags</label>
+                                <div id = "fortags">
                                 <br>
                                 <tag-manager id="tags" ng-init="tags=[]" ng-model="tags" tags="tags"></tag-manager>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="description">Add description</label>
                                 <textarea type="text"
                                           class="form-control" ng-model="description" id="description"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-success">Publish</button>
+                            <button id="publish" type="submit" class="btn btn-success">Publish</button>
 
                             <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
-                        </td></form>
+                        </form></td>
                     </tr>
                 </table>
 
