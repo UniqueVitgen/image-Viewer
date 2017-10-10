@@ -69,6 +69,15 @@ app
             }
             return new Blob(byteArrays, { type: contentType });
         }
+        function blobToString(b) {
+            var u, x;
+            u = URL.createObjectURL(b);
+            x = new XMLHttpRequest();
+            x.open('GET', u, false); // although sync, you're not fetching over internet
+            x.send();
+            URL.revokeObjectURL(u);
+            return x.responseText;
+        }
     function downloadURI(uri, name) {
         var link = document.createElement("a");
         link.download = name;
