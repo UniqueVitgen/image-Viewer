@@ -69,14 +69,16 @@ app
             }
             return new Blob(byteArrays, { type: contentType });
         }
-        function blobToString(b) {
-            var u, x;
-            u = URL.createObjectURL(b);
-            x = new XMLHttpRequest();
-            x.open('GET', u, false); // although sync, you're not fetching over internet
-            x.send();
-            URL.revokeObjectURL(u);
-            return x.responseText;
+        function blobToBase64(blob) {
+
+            var reader = new FileReader();
+
+            reader.readAsDataURL(blob);
+            var res;
+            reader.onloadend = function() {
+                res = reader.result;
+            };
+            return res;
         }
     function downloadURI(uri, name) {
         var link = document.createElement("a");
@@ -104,6 +106,9 @@ app
     }
     $http.get('pictures').success(function (res) {
             $scope.pictures = res;
+            var str = res[0].source;
+            var blob = base64toBlob(str,"image/jpeg");
+            var str2 = blobToBase64(blob);
             $scope.sources = [];
             for(var i = 0; i < $scope.pictures.length;i++){
                 var b = base64toBlob(res[i].source,"image/jpeg");
@@ -131,7 +136,9 @@ app
         }).success(function(res) {
 
         })
-            .error();
+            .error(function(res){
+                $scope.message = 'fill all Fields';
+            });
     };
     $scope.searching = function (name) {
         var findingTag = $scope.allTags.filter(function (tag) {

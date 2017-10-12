@@ -59,7 +59,8 @@
                     </tr>
                     <tr>
                         <td><lf-ng-md-file-input lf-files="files05" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input></td>
-                        <td><form ng-submit="publish()" method="POST" enctype="multipart/form-data"><div class="form-group">
+                        <td><form name="imgForm" ng-submit="publish()" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
                                 <label for="name">Name your media</label>
                                 <input type="text"
                                        class="form-control" ng-model="name" id="name">
@@ -76,9 +77,24 @@
                                 <textarea type="text"
                                           class="form-control" ng-model="description" id="description"></textarea>
                             </div>
-                            <button id="publish" type="submit" class="btn btn-success">Publish</button>
+                            <!--<div uib-tooltip="asdsad" tooltip-enable="!(name.length>0 &&-->
+                             <!--description.length>0 && tags.length>0 && files05.length>0)" style="display:inline-block">-->
+                            <button id="publish"  ng-disabled="!(name.length>0 &&
+                             description.length>0 && tags.length>0 && files05.length>0)" type="submit" class="btn btn-secondary btn-success"
+                                    >
+                                Publish
+                            </button>
+                            <p ng-show="!(name.length>0 &&
+                             description.length>0 && tags.length>0 && files05.length>0)" class="help-block">Fill in all the fields</p>
 
-                            <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
+                            <!--</div>-->
+                            <!--<div style="height:100px"></div>-->
+                            <!--<div uib-tooltip="asdsad" tooltip-enable="disableButton" style="display:inline-block">-->
+                                <!--<button ng-disabled="disableButton" ng-style="{'pointer-events':disableButton ? 'none' : ''}">Hover over me!</button>-->
+                            <!--</div>-->
+                            <!--<br>Check the checkbox to disable the button <input type="checkbox" ng-model="disableButton">-->
+                            <!--<div class="alert alert-info margin-top-5" ng-show="!(name.length>0 &&-->
+                             <!--description.length>0 && tags.length>0 && files05.length>0)">{{message}}</div>-->
                         </form></td>
                     </tr>
                 </table>

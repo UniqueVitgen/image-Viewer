@@ -58,6 +58,9 @@ public class HomeRestController {
 		if (appUserRepository.findOneByUsername(appUser.getUsername()) != null) {
 			throw new RuntimeException("Username already exist");
 		}
+		if (appUserRepository.findOneByEmail(appUser.getEmail()) != null) {
+			throw new RuntimeException("Email already exist");
+		}
 		List<String> roles = new ArrayList<>();
 		roles.add("USER");
 		appUser.setRoles(roles);

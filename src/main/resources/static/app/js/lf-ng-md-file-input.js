@@ -81,7 +81,7 @@
                 switch(tagType){
                     case 'image': {
                         element.replaceWith(
-                            '<img src="' + src + '" />'
+                            '<img id="MainImg" src="' + src + '" />'
                         );
                         break;
                     }
