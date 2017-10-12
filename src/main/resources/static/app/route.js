@@ -1,7 +1,8 @@
-angular.module('JWTDemoApp').config(function($stateProvider, $urlRouterProvider) {
+angular.module('JWTDemoApp').config(function($stateProvider, $urlRouterProvider,$locationProvider) {
 	
 	// the ui router will redirect if a invalid state has come.
 	$urlRouterProvider.otherwise('/page-not-found');
+    $locationProvider.html5Mode(true);
 	// parent view - navigation state
 	$stateProvider.state('nav', {
 		abstract : true,
@@ -70,4 +71,4 @@ angular.module('JWTDemoApp').config(function($stateProvider, $urlRouterProvider)
 			}
 		}
 	});
-});
+})
