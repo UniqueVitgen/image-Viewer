@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag,Long> {
     Tag findByName(String name);
-    @Query(value = "select * from testdb.tags where id in (SELECT tag_id FROM testdb.pricture_tags group by tag_id order by tag_id)",
-    nativeQuery = true)
+    @Query(value = "SELECT tags.* FROM tags,pricture_tags where tags.id = pricture_tags.tag_id group by id order by count(picture_id) desc",
+            nativeQuery = true)
     List<Tag> orderByPopular();
 }
