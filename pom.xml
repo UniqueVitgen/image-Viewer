@@ -94,6 +94,47 @@
 			<artifactId>jjwt</artifactId>
 			<version>${jjwt.version}</version>
 		</dependency>
+
+
+		<!--Dependency for cloudinary-->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary</artifactId>
+			<version>1.0.14</version>
+			<exclusions>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>http-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jca</groupId>
+			<artifactId>jca</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.craftsmenlabs.scheduler.akka</groupId>
+			<artifactId>gareth-scheduler-akka</artifactId>
+			<version>0.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.orolle</groupId>
+			<artifactId>smc-model</artifactId>
+			<version>6.4.0_rx_b1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.vbauer</groupId>
+			<artifactId>herald</artifactId>
+			<version>1.2.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -101,11 +142,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-						<groupId>com.heroku.sdk</groupId>
-						<artifactId>heroku-maven-plugin</artifactId>
-						<version>1.0.0</version>
 			</plugin>
 		</plugins>
 	</build>

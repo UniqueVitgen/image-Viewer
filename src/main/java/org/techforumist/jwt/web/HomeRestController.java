@@ -1,7 +1,6 @@
 package org.techforumist.jwt.web;
 
 import com.mysql.jdbc.Blob;
-import com.sun.javafx.scene.input.PickResultChooser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.hibernate.Hibernate;
@@ -45,6 +44,8 @@ public class HomeRestController {
 
 	@Autowired
 	private TagRepository tagRepository;
+
+	@Autowired ImageController imageController;
 
 	/**
 	 * This method is used for user registration. Note: user registration is not
@@ -112,14 +113,12 @@ public class HomeRestController {
 								   @RequestParam("description") String description,
 								   @RequestParam("tags") String[] tags
 								   ) {
-
 		Picture picture = null;
 		try {
-
+			String url = imageController.post(file);
 			// Get the file and save it somewhere
-			byte[] bytes = file.getBytes();
 			picture = new Picture();
-			picture.setSource(file.getBytes());
+			picture.setSource(url);
 			picture.setName(name);
 			picture.setDescription(description);
 			Tag tag;
@@ -134,7 +133,7 @@ public class HomeRestController {
 			return new ResponseEntity<Picture>(pictureRepository.save(picture), HttpStatus.CREATED);
 
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -156,8 +155,8 @@ public class HomeRestController {
 
 	@RequestMapping(value = "/popular", method = RequestMethod.GET)
 	public List<Tag> getPopularTags(){
-		List<Tag> tags = tagRepository.findAll();
-		getRandomElements(tags.size()-7,tags);
+		List<Tag> tags = tagRepository.orderByPopular();
+
 		return tags;
 	}
 

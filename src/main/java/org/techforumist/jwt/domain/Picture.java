@@ -13,8 +13,8 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Lob
-    private byte[] source;
+
+    private String source;
 
     private String name;
 
@@ -33,11 +33,20 @@ public class Picture {
         this.id = id;
     }
 
-    public byte[] getSource() {
+//    public byte[] getSource() {
+//        return source;
+//    }
+//
+//    public void setSource(byte[] source) {
+//        this.source = source;
+//    }
+
+
+    public String getSource() {
         return source;
     }
 
-    public void setSource(byte[] source) {
+    public void setSource(String source) {
         this.source = source;
     }
 

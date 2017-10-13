@@ -2,6 +2,7 @@
 // Creating the Angular Controller
 app
 .controller('HomeController', ['$http', '$scope', 'AuthService', 'FileUploader','Upload',
+    '$state','$rootScope',
     function($http, $scope, AuthService, FileUploader,Upload,$state,$rootScope) {
         Array.prototype.contains = function ( needle ) {
             for (i in this) {
@@ -106,13 +107,9 @@ app
     }
     $http.get('pictures').success(function (res) {
             $scope.pictures = res;
-            var str = res[0].source;
-            var blob = base64toBlob(str,"image/jpeg");
-            var str2 = blobToBase64(blob);
             $scope.sources = [];
             for(var i = 0; i < $scope.pictures.length;i++){
-                var b = base64toBlob(res[i].source,"image/jpeg");
-                $scope.sources.push(URL.createObjectURL(b));
+                $scope.sources.push($scope.pictures[i].source);
             }
 
         }).error(function (error) {
@@ -120,6 +117,15 @@ app
         });
 
     // downloadURI("data:text/html,HelloWorld!", "helloWorld.txt");
+        $scope.populars = function () {
+            $http.get('popular').success(function (res) {
+                $scope.popularTags = res;
+
+            }).error(function(err){
+
+            });
+            return $scope.popularTags;
+        };
     $scope.publish = function() {
 
         var fd = new FormData();
@@ -134,7 +140,11 @@ app
             headers: {'Content-Type': undefined },
             transformRequest: angular.identity
         }).success(function(res) {
-
+            if(res) {
+                var jq = angular.element(document.querySelector( '#closeModal' ));
+                jq[0].click();
+                $state.reload();
+            }
         })
             .error(function(res){
                 $scope.message = 'fill all Fields';
