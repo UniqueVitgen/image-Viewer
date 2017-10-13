@@ -134,12 +134,13 @@ app
         fd.append("name", this.name);
         fd.append("description", this.description);
         fd.append("tags", this.tags);
-
+        $scope.dataLoaded = false;
         $http.post("upload", fd, {
             withCredentials: true,
             headers: {'Content-Type': undefined },
             transformRequest: angular.identity
         }).success(function(res) {
+            $scope.dataLoaded = true;
             if(res) {
                 var jq = angular.element(document.querySelector( '#closeModal' ));
                 jq[0].click();
@@ -169,8 +170,7 @@ app
 
         $scope.sources = [];
         for(var i = 0; i < $scope.findingPictures.length;i++){
-            var b = base64toBlob($scope.findingPictures[i].source,"image/jpeg");
-            $scope.sources.push(URL.createObjectURL(b));
+            $scope.sources.push($scope.findingPictures[i].source);
         }
     }
     $scope.searchValueChange = function(name){
